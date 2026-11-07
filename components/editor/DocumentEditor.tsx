@@ -240,6 +240,12 @@ export default function DocumentEditor({ initialDoc }: { initialDoc: InitialDoc 
           }}>
             プレビュー
           </Button>
+          <Link
+            href={`/documents/${initialDoc.id}/share`}
+            className="text-sm text-muted-foreground hover:underline"
+          >
+            共有
+          </Link>
           <Link href="/dashboard" className="text-sm text-muted-foreground hover:underline">
             ← 一覧へ
           </Link>
