@@ -2,6 +2,7 @@
 
 import { startTransition, useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { useAutoSave } from '@/hooks/useAutoSave'
 import BasicInfoSection from '@/components/editor/sections/BasicInfoSection'
@@ -55,6 +56,7 @@ function isValidUrl(value: string): boolean {
 
 export default function DocumentEditor({ initialDoc }: { initialDoc: InitialDoc }) {
   const storageKey = `draft-${initialDoc.id}`
+  const router = useRouter()
 
   const [doc, setDoc] = useState<DocumentData>(initialDoc.data)
   const [title, setTitle] = useState(initialDoc.title)
@@ -231,8 +233,12 @@ export default function DocumentEditor({ initialDoc }: { initialDoc: InitialDoc 
           {saveStatusLabel && (
             <span className={`text-xs ${saveStatusLabel.className}`}>{saveStatusLabel.text}</span>
           )}
-          <Button variant="outline" size="sm" onClick={() => validate()}>
-            プレビュー（準備中）
+          <Button variant="outline" size="sm" onClick={() => {
+            if (validate()) {
+              router.push(`/documents/${initialDoc.id}/preview`)
+            }
+          }}>
+            プレビュー
           </Button>
           <Link href="/dashboard" className="text-sm text-muted-foreground hover:underline">
             ← 一覧へ
