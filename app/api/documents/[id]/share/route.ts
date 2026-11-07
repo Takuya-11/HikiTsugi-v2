@@ -15,6 +15,12 @@ export async function POST(
 
   const { plainToken, tokenHash } = generateShareToken()
 
+  await supabase
+    .from('share_tokens')
+    .update({ status: 'revoked', revoked_at: new Date().toISOString() })
+    .eq('document_id', id)
+    .eq('status', 'active')
+
   const { error } = await supabase
     .from('share_tokens')
     .insert({ document_id: id, token_hash: tokenHash, status: 'active' })

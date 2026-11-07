@@ -1,5 +1,9 @@
 export const instant = false
 
+export const metadata = {
+  robots: { index: false, follow: false },
+}
+
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createAdminClient } from '@/lib/supabase/admin'

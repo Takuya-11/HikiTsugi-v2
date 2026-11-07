@@ -94,6 +94,10 @@ export function useAutoSave({ documentId, initialVersion }: UseAutoSaveOptions):
       localStorage.removeItem(storageKey)
       router.refresh()
     } else {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current)
+        debounceTimer.current = null
+      }
       currentVersion.current = conflictInfo.serverVersion
       setConflictInfo(null)
       if (pendingData.current) {
