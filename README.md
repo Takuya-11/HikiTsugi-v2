@@ -32,15 +32,13 @@ HikiTsugi v2 は、決まったフォームに入力するだけで統一フォ�
 
 ## スクリーンショット
 
-> スクリーンショットは `public/screenshots/` に配置します。
-
 | ログイン画面 | ダッシュボード |
 |---|---|
 | ![ログイン画面](./public/screenshots/01-login.png) | ![ダッシュボード](./public/screenshots/02-dashboard.png) |
 
-| 編集画面 | 共有閲覧画面 |
+| 編集画面 | 共有管理画面 |
 |---|---|
-| ![編集画面](./public/screenshots/03-editor.png) | ![共有閲覧](./public/screenshots/04-shared-view.png) |
+| ![編集画面](./public/screenshots/03-editor.png) | ![共有管理](./public/screenshots/04-shared-view.png) |
 
 ---
 
