@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 export type SaveStatus = 'idle' | 'pending' | 'saving' | 'saved' | 'failed' | 'conflict'
 
@@ -29,7 +28,6 @@ interface UseAutoSaveReturn {
 const DEBOUNCE_MS = 2000
 
 export function useAutoSave({ documentId, initialVersion }: UseAutoSaveOptions): UseAutoSaveReturn {
-  const router = useRouter()
   const storageKey = `draft-${documentId}`
 
   const currentVersion = useRef(initialVersion)
@@ -91,8 +89,13 @@ export function useAutoSave({ documentId, initialVersion }: UseAutoSaveOptions):
     if (!conflictInfo) return
 
     if (resolution === 'useServer') {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current)
+        debounceTimer.current = null
+      }
       localStorage.removeItem(storageKey)
-      router.refresh()
+      setConflictInfo(null)
+      window.location.reload()
     } else {
       if (debounceTimer.current) {
         clearTimeout(debounceTimer.current)
@@ -104,7 +107,7 @@ export function useAutoSave({ documentId, initialVersion }: UseAutoSaveOptions):
         executeSave(pendingData.current)
       }
     }
-  }, [conflictInfo, storageKey, router, executeSave])
+  }, [conflictInfo, storageKey, executeSave])
 
   useEffect(() => {
     return () => {
